@@ -1,0 +1,18 @@
+#!/bin/bash
+
+mkdir movies
+
+cp -r use_bs4.py ./movies
+cp -r bs4 ./movies
+
+cd movies
+
+python use_bs4.py
+
+while read link;do
+    axel -n 100 "$link"
+done <download_links.txt
+
+rm download_links.txt
+
+rm use_bs4.py

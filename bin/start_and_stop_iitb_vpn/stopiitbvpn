@@ -1,0 +1,7 @@
+#!/bin/bash
+
+
+#this is to stop iitb vpn
+
+
+sudo systemctl stop openvpn@iitbvpn.service
