@@ -1,0 +1,44 @@
+#!/bin/bash
+
+cd ~
+
+cd Desktop
+
+mkdir movies
+
+cd movies
+
+url="$1"
+
+echo "$url"
+
+axel -o index -n 100 $url
+
+cat index | cut -d '"' -f 2 > weblinks
+
+x=$(wc -l < weblinks)
+
+echo "number of lines in weblink file:$x"
+
+echo "now gedit will open .see the top and bottom html lines and remember"
+
+gedit weblinks&
+
+read -p "enter the number of top html lines: " y
+
+x=$(($x-$y))
+
+
+read -p "enter the number of bottom html lines: " b
+
+cat weblinks | tail -n $x | head -n $(($x-$b)) > finallinks
+
+while read link;do
+    axel -n 100 "$url$link"
+done <finallinks
+
+rm index
+
+rm weblinks
+
+rm finallinks
